@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>%d %5p [%t] %c{1}:%M:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${APP_HOME:-.}/logs/dh-bigdata.log</File>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${APP_HOME:-.}/logs/dh-data.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} | %thread | %-5level | %logger{15} | %class{20}.%method\(%line\) | %X{ip} | %X{clientIp} | %X{reqTraceId} | %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.dhph.bigdata.importer" level="DEBUG"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.dozer" level="ERROR"/>
+    <logger name="com.google.common" level="INFO"/>
+    <logger name="org.apache.commons.beanutils" level="INFO"/>
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="com.ibatis" level="DEBUG"/>
+    <logger name="com.baomidou" level="INFO"/>
+    <logger name="org.mybatis" level="INFO"/>
+    <logger name="springfox" level="INFO"/>
+    <logger name="org.apache.http" level="INFO"/>
+    <logger name="freemarker.cache" level="INFO"/>
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="org.apache.axis2" level="INFO"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="RollingFile"/>
+    </root>
+</configuration>

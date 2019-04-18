@@ -1,0 +1,119 @@
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://supervise.service.app.mp.zkbc.net/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://supervise.service.app.mp.zkbc.net/" name="InfoWsServiceService">
+<types/>
+<message name="productRegistration">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
+<part name="arg2" type="xsd:string"/>
+</message>
+<message name="productRegistrationResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<message name="productStatusUpdate">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
+<part name="arg2" type="xsd:string"/>
+</message>
+<message name="productStatusUpdateResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<message name="productProcessUpdate">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
+<part name="arg2" type="xsd:string"/>
+</message>
+<message name="productProcessUpdateResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<message name="addOperationData">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
+<part name="arg2" type="xsd:string"/>
+</message>
+<message name="addOperationDataResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<message name="helloWorld">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="helloWorldResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<portType name="InfoWsService">
+<operation name="productRegistration" parameterOrder="arg0 arg1 arg2">
+<input wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/productRegistrationRequest" message="tns:productRegistration"/>
+<output wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/productRegistrationResponse" message="tns:productRegistrationResponse"/>
+</operation>
+<operation name="productStatusUpdate" parameterOrder="arg0 arg1 arg2">
+<input wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/productStatusUpdateRequest" message="tns:productStatusUpdate"/>
+<output wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/productStatusUpdateResponse" message="tns:productStatusUpdateResponse"/>
+</operation>
+<operation name="productProcessUpdate" parameterOrder="arg0 arg1 arg2">
+<input wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/productProcessUpdateRequest" message="tns:productProcessUpdate"/>
+<output wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/productProcessUpdateResponse" message="tns:productProcessUpdateResponse"/>
+</operation>
+<operation name="addOperationData" parameterOrder="arg0 arg1 arg2">
+<input wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/addOperationDataRequest" message="tns:addOperationData"/>
+<output wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/addOperationDataResponse" message="tns:addOperationDataResponse"/>
+</operation>
+<operation name="helloWorld">
+<input wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/helloWorldRequest" message="tns:helloWorld"/>
+<output wsam:Action="http://supervise.service.app.mp.zkbc.net/InfoWsService/helloWorldResponse" message="tns:helloWorldResponse"/>
+</operation>
+</portType>
+<binding name="InfoWsServicePortBinding" type="tns:InfoWsService">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+<operation name="productRegistration">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</output>
+</operation>
+<operation name="productStatusUpdate">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</output>
+</operation>
+<operation name="productProcessUpdate">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</output>
+</operation>
+<operation name="addOperationData">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</output>
+</operation>
+<operation name="helloWorld">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://supervise.service.app.mp.zkbc.net/"/>
+</output>
+</operation>
+</binding>
+<service name="InfoWsServiceService">
+<port name="InfoWsServicePort" binding="tns:InfoWsServicePortBinding">
+<soap:address location="http://test.bjp2p.com.cn:8443/platformService"/>
+</port>
+</service>
+</definitions>

@@ -1,0 +1,136 @@
+#server:
+#  port: 8081
+spring:
+  profiles:
+  debug: true
+#    active: dev
+#  servlet:
+#    multipart:
+#      max-file-size: 100MB
+#      max-request-size: 100MB
+#      enabled: true
+  kafka:
+    bootstrap-servers: 10.10.10.20:9092
+    template:
+      default-topic: pd_product
+    producer:
+      # 0 1 -1/all 默认1
+      acks: 1
+      # 默认值 16384
+      batch-size: 16384
+      #默认33554432=32*1012*1024
+      bufferMemory: 33554432
+      #none、gzip、snappy 默认none
+      compressionType: none
+      # 默认0
+      retries: 0
+      # 默认就是string
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 默认就是string
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    listener:
+      #      ack-count:
+      ack-mode: manual
+      #      ack-time:
+      # 默认 1
+      concurrency: 1
+      poll-timeout: 3000
+    consumer:
+      group-id: admin
+      enable-auto-commit: false
+      # 默认 5000
+      #      auto-commit-interval: 5000
+      # earliest latest none
+      auto-offset-reset: latest
+      # 默认 500
+      fetch-max-wait: 500
+      # 默认1
+      fetch-min-size: 1
+      # 默认 3000 The value must be set lower than session.timeout.ms, but typically should be set no higher than 1/3 of that value.
+      heartbeat-interval: 3000
+      # 默认 500
+      max-poll-records: 500
+      # 默认就是string
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 默认就是string
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#  redis:
+#    database: 0
+#    host: localhost
+#    port: 6379
+#    password:      # 密码（默认为空）
+#    timeout: 6000  # 连接超时时长（毫秒）
+#    jedis:
+#      pool:
+#        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+#        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-idle: 10      # 连接池中的最大空闲连接
+#        min-idle: 5       # 连接池中的最小空闲连接
+#
+#renren:
+#  redis:
+#    open: false  # 是否开启redis缓存  true开启   false关闭
+#  shiro:
+#    redis: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】
+#
+#
+#mybatis-plus-wh:
+#  datasource: datasourceWh
+#  mapper-locations: classpath:mapping/wh/*Mapper.xml
+#  global-config:
+#    db-type: mysql
+#    id-type: 0
+#    field-strategy: 2
+#    db-column-underline: true
+#    refresh-mapper: true
+#    logic-delete-value: 0
+#    logic-not-delete-value: 1
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false
+#mybatis-plus-bjhj:
+#  datasource: datasourceBjhj
+#  mapper-locations: classpath:mapping/bjhj/*Mapper.xml
+#  global-config:
+#    id-type: 0
+#    db-type: mysql
+#    field-strategy: 2
+#    db-column-underline: true
+#    refresh-mapper: true
+#    logic-delete-value: 0
+#    logic-not-delete-value: 1
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false
+
+#mybatis
+#mybatis-plus:
+#  mapper-locations: classpath*:com/dhph/bjhj/api/**/mapping/*.xml
+#  #实体扫描，多个package用逗号或者分号分隔
+#  typeAliasesPackage: com.dhph.bjhj.api.entity
+#  global-config:
+#    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+#    id-type: 0
+#    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+#    field-strategy: 2
+#    #驼峰下划线转换
+#    db-column-underline: true
+#    #刷新mapper 调试神器
+#    refresh-mapper: true
+#    #数据库大写下划线转换
+#    #capital-mode: true
+#    #序列接口实现类配置
+#    #key-generator: com.baomidou.springboot.xxx
+#    #逻辑删除配置
+#    logic-delete-value: -1
+#    logic-not-delete-value: 0
+#    #自定义填充策略接口实现
+#    #meta-object-handler: com.baomidou.springboot.xxx
+#    #自定义SQL注入器
+#    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false
+#    call-setters-on-nulls: true
+logging:
+  config: classpath:logback.xml
