@@ -17,7 +17,7 @@ public class KuduAgent {
 
 
     public static KuduClient client;
-    private final static String master = "hadoop01";
+    private final static String master = "10.10.10.21";
     private final static SessionConfiguration.FlushMode FLASH_MODE_MULT = SessionConfiguration.FlushMode.MANUAL_FLUSH;
     private final static SessionConfiguration.FlushMode FLASH_MODE_SINGLE = SessionConfiguration.FlushMode.AUTO_FLUSH_SYNC;
     private final static int BUFFER_SPACE = 1000;

@@ -51,7 +51,7 @@ public class Kudu{
             KuduTable table = client.openTable(tableName);
             KuduSession session = client.newSession();
             System.out.println("-------start--------"+System.currentTimeMillis());
-            for (int i = 30000; i < 31000; i++) {
+            for (int i = 40000; i < 50000; i++) {
                 Insert insert = table.newInsert();
                 PartialRow row = insert.getRow();
                 row.addString(0, i+"");
@@ -79,7 +79,7 @@ public class Kudu{
             KuduSession session = client.newSession();
             Update update = table.newUpdate();
             PartialRow row = update.getRow();
-            row.addString("key", 4+"");
+            row.addString("key", 30000+"");
             row.addString("value", "value " + 10);
             OperationResponse operationResponse =  session.apply(update);
 

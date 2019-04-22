@@ -20,14 +20,14 @@ public class TestKudu {
 
     public static void main(String[] args) throws KuduException {
 //        insertSingleTEST();
-//        insertMultTEST();
+        insertMultTEST();
 //        updateMultTEST();
 //        updateSingleTEST();
 //        deleteMultTEST();
 //        deleteSingleTEST();
 //        renameTEST();
 //        alterColumnTEST();
-        selectTest();
+//        selectTest();
 
     }
 
