@@ -98,5 +98,10 @@
             <artifactId>dh-bigdata-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.dhph.bigdata</groupId>
+            <artifactId>dh-bigdata-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

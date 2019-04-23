@@ -181,7 +181,12 @@ public class KuduAgent {
             session.setFlushMode(FLASH_MODE_SINGLE);
             Insert insert = kuduTable.newInsert();
             OperationResponse operate = KuduAgentUtils.operate(entity, insert, session);
-            log.info("insert 插入数据:{}", operate.getRowError());
+            if(operate.getRowError() == null){
+                log.info("insert 插入数据成功.");
+            }
+            else{
+                log.info("insert 插入数据失败:{}", operate.getRowError());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("kudu执行插入操作失败，失败信息:cause-->{},message-->{}", e.getCause(), e.getMessage());
