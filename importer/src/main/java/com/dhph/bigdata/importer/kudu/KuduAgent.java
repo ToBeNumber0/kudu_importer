@@ -181,17 +181,14 @@ public class KuduAgent {
             session.setFlushMode(FLASH_MODE_SINGLE);
             Insert insert = kuduTable.newInsert();
             OperationResponse operate = KuduAgentUtils.operate(entity, insert, session);
-            if(operate.getRowError() == null){
-                log.info("insert 插入数据成功.");
-            }
-            else{
+            if(operate.getRowError() != null){
                 log.info("insert 插入数据失败:{}", operate.getRowError());
             }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("kudu执行插入操作失败，失败信息:cause-->{},message-->{}", e.getCause(), e.getMessage());
         } finally {
-//            KuduAgentUtils.close(session, client);
+            KuduAgentUtils.close(session, null);
         }
 
     }
