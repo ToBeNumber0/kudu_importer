@@ -1,4 +1,4 @@
-package com.dhph.bigdata.importer.utils;
+package com.dhph.bigdata.importer.kudu;
 
 import java.util.List;
 

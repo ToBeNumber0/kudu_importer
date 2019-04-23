@@ -1,9 +1,14 @@
-package com.dhph.bigdata.importer.utils;
+package com.dhph.bigdata.importer.kudu;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
+import com.dhph.bigdata.common.utils.CommonUtil;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kudu.Type;
 import org.apache.kudu.client.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,47 +18,58 @@ import java.util.Map;
 public class KuduAgentUtils {
 
 
-    public static Operation WrapperKuduOperation(KuduColumn entity, Operation operate) {
+    /**
+     * 为指定类型的字段转换并赋值
+     * @param entity
+     * @param operate
+     * @return
+     * @throws ClassCastException
+     */
+    public static Operation WrapperKuduOperation(KuduColumn entity, Operation operate) throws ClassCastException{
 
         Type rowType = entity.getColumnType();
         String columnName = entity.getColumnName();
         Object columnValue = entity.getColumnValue();
-
-        log.info("kudu操作对象包装，列名:{},列值:{}", columnName, columnValue);
-
-        if (rowType.equals(Type.BINARY)) {
-
+//        log.info("kudu操作对象包装，列名:{},列值:{}", columnName, columnValue);
+        if(!CommonUtil.isObjectNotEmpty(columnValue)){
+//            log.debug("{} 列为空，跳过", columnName);
+            return operate;
         }
-        if (rowType.equals(Type.STRING)) {
-            if (isSetLogic(entity, operate)) {
-                operate.getRow().addString(columnName, String.valueOf(columnValue));
-            }
-        }
-        if (rowType.equals(Type.BOOL)) {
-
-        }
-        if (rowType.equals(Type.DOUBLE)) {
-
-        }
-        if (rowType.equals(Type.FLOAT)) {
-
-        }
-        if (rowType.equals(Type.INT8)) {
-
-        }
-        if (rowType.equals(Type.INT16)) {
-
-        }
-        if (rowType.equals(Type.INT32)) {
-
-        }
-        if (rowType.equals(Type.INT64)) {
-            if (isSetLogic(entity, operate)) {
-                operate.getRow().addLong(columnName, (Integer) columnValue);
-            }
-        }
-        if (rowType.equals(Type.UNIXTIME_MICROS)) {
-
+        switch (rowType){
+            case STRING:
+                operate.getRow().addString(columnName, TypeUtils.castToString(columnValue));
+                break;
+            case INT64:
+            case UNIXTIME_MICROS:
+                operate.getRow().addLong(columnName, TypeUtils.castToLong(columnValue));
+                break;
+            case DOUBLE:
+                operate.getRow().addDouble(columnName, TypeUtils.castToDouble(columnValue));
+                break;
+            case INT32:
+                operate.getRow().addInt(columnName, TypeUtils.castToInt(columnValue));
+                break;
+            case INT16:
+                operate.getRow().addShort(columnName, TypeUtils.castToShort(columnValue));
+                break;
+            case INT8:
+                operate.getRow().addByte(columnName, TypeUtils.castToByte(columnValue));
+                break;
+            case BOOL:
+                operate.getRow().addBoolean(columnName, TypeUtils.castToBoolean(columnValue));
+                break;
+            case BINARY:
+                operate.getRow().addBinary(columnName, TypeUtils.castToBytes(columnValue));
+                break;
+            case FLOAT:
+                operate.getRow().addFloat(columnName, TypeUtils.castToFloat(columnValue));
+                break;
+            case DECIMAL:
+                BigDecimal decimal = new BigDecimal(columnValue.toString());
+                decimal = decimal.setScale(2, BigDecimal.ROUND_DOWN);
+                operate.getRow().addDecimal(columnName, decimal);
+            default:
+                break;
         }
         return operate;
     }
@@ -99,6 +115,9 @@ public class KuduAgentUtils {
                         break;
                     case UNIXTIME_MICROS:
                         result.put(entity.getColumnName(), row.getLong(entity.getColumnName()));
+                        break;
+                    default:
+                        result.put(entity.getColumnName(),null);
                         break;
                 }
             }

@@ -7,7 +7,9 @@ import org.apache.kudu.Type;
 import org.apache.kudu.client.*;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: KuduUtil
@@ -125,12 +127,57 @@ public class Kudu{
             }
         }
     }
-
     @Test
-    public void kuduDelTabletest(){
+    public void kuduDelTableTest(){
         KuduClient client = new KuduClient.KuduClientBuilder(KUDU_MASTER).build();
         try {
-            client.deleteTable("java_example-1555481634070");
+            client.deleteTable("java_example_1555578532700");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                client.shutdown();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Test
+    public void kuduShowTableTest(){
+        KuduClient client = new KuduClient.KuduClientBuilder(KUDU_MASTER).build();
+        try {
+            KuduTable table = client.openTable("impala::kudu_database.pd_product");
+            Schema schema = table.getSchema();
+            System.out.println(schema.getPrimaryKeyColumns().get(0).getName());
+            for(ColumnSchema columnSchema: schema.getColumns()){
+                System.out.println(columnSchema.getName()+ " "+ columnSchema.getType()+ " ");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                client.shutdown();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void kuduTransferTest(){
+        KuduClient client = new KuduClient.KuduClientBuilder(KUDU_MASTER).build();
+        try {
+            KuduTable table = client.openTable("impala::kudu_database. pd_product_0422");
+            Schema schema = table.getSchema();
+            Map<String, Type> typeMap = new HashMap<>();
+            System.out.println(schema.getPrimaryKeyColumns().get(0).getName());
+            for(ColumnSchema columnSchema: schema.getColumns()){
+                typeMap.put(columnSchema.getName(), columnSchema.getType());
+//                System.out.println(columnSchema.getName()+ " "+ columnSchema.getType()+ " ");
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

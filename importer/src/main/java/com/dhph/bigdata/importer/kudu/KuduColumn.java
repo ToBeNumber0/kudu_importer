@@ -1,4 +1,4 @@
-package com.dhph.bigdata.importer.utils;
+package com.dhph.bigdata.importer.kudu;
 
 import org.apache.kudu.Type;
 import org.apache.kudu.client.KuduPredicate;

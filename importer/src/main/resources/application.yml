@@ -54,6 +54,9 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       # 默认就是string
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+kudu:
+  table: impala::kudu_database.pd_product_0422
+  master: 10.10.10.21
 #  redis:
 #    database: 0
 #    host: localhost
