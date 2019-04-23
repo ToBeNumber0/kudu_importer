@@ -27,12 +27,16 @@ public class KuduAgentUtils {
      */
     public static Operation WrapperKuduOperation(KuduColumn entity, Operation operate) throws ClassCastException{
 
-        Type rowType = entity.getColumnType();
         String columnName = entity.getColumnName();
         Object columnValue = entity.getColumnValue();
 //        log.info("kudu操作对象包装，列名:{},列值:{}", columnName, columnValue);
         if(!CommonUtil.isObjectNotEmpty(columnValue)){
 //            log.debug("{} 列为空，跳过", columnName);
+            return operate;
+        }
+        Type rowType = entity.getColumnType();
+        if(null==rowType){
+            log.error("kudu数据库中没有该字段，{}", entity.getColumnName());
             return operate;
         }
         switch (rowType){
