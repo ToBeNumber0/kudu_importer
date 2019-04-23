@@ -3,7 +3,6 @@
 spring:
   profiles:
   debug: true
-#    active: dev
 #  servlet:
 #    multipart:
 #      max-file-size: 100MB

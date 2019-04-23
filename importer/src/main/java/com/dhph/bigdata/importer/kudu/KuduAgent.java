@@ -69,23 +69,28 @@ public class KuduAgent {
      * @return 封装好的 KuduRow 对象
      */
     public KuduRow transfer(String msg){
-        KuduRow kuduRow = new KuduRow();
-        List<KuduColumn> rows = Lists.newArrayList();
-        JSONObject obj = JSONObject.parseObject(msg);
-        for(String key :obj.keySet()){
-            KuduColumn column = new KuduColumn();
-            if(keyList.contains(key)){
-                column.setPrimaryKey(Boolean.TRUE);
-            }
-            column.setColumnName(key);
-            column.setColumnType(typeMap.get(key)).setUpdate(false);
-            column.setColumnValue(obj.get(key));
-            rows.add(column);
+        try {
+            KuduRow kuduRow = new KuduRow();
+            List<KuduColumn> rows = Lists.newArrayList();
+            JSONObject obj = JSONObject.parseObject(msg);
+            for(String key :obj.keySet()){
+                KuduColumn column = new KuduColumn();
+                if(keyList.contains(key)){
+                    column.setPrimaryKey(Boolean.TRUE);
+                }
+                column.setColumnName(key);
+                column.setColumnType(typeMap.get(key)).setUpdate(false);
+                column.setColumnValue(obj.get(key));
+                rows.add(column);
 //            System.out.println(key);
+            }
+            kuduRow.setRows(rows);
+            return kuduRow;
+        }catch (Exception e){
+            log.error("将json转换为kudu对象异常", e);
+            return null;
         }
-        kuduRow.setRows(rows);
 //        System.out.println(obj);
-        return kuduRow;
     }
 
     /**
