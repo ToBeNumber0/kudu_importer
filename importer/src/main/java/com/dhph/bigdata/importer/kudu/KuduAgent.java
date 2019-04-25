@@ -44,9 +44,9 @@ public class KuduAgent {
     private void init(){
         this.tableName = config.tableName;
         client = new KuduClient.KuduClientBuilder(config.master).build();
+        log.info("kudu连接创建成功...");
         typeMap = getTypeMap(tableName);
         keyList = getKeyList(tableName);
-
     }
 
     private static KuduAgent kuduAgent;
@@ -184,7 +184,10 @@ public class KuduAgent {
             if(operate.getRowError() != null){
                 log.info("insert 插入数据失败:{}", operate.getRowError());
             }
-        } catch (Exception e) {
+        } catch (IllegalStateException | KuduException e){
+            log.info("连接丢失，尝试重连..", e);
+            init();
+        }catch (Exception e) {
             e.printStackTrace();
             log.error("kudu执行插入操作失败，失败信息:cause-->{},message-->{}", e.getCause(), e.getMessage());
         } finally {

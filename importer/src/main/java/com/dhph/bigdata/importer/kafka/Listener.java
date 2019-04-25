@@ -4,7 +4,6 @@ import com.dhph.bigdata.common.utils.CommonUtil;
 import com.dhph.bigdata.importer.kudu.KuduAgent;
 import com.dhph.bigdata.importer.kudu.KuduRow;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
