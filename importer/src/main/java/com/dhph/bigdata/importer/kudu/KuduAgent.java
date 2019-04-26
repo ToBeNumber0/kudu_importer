@@ -180,7 +180,7 @@ public class KuduAgent {
             session = client.newSession();
             session.setFlushMode(FLASH_MODE_SINGLE);
             Insert insert = kuduTable.newInsert();
-            OperationResponse operate = KuduAgentUtils.operate(entity, insert, session);
+            OperationResponse operate = KuduAgentUtils.operate(entity, insert, session, keyList);
             if(operate.getRowError() != null){
                 log.info("insert 插入数据失败:{}", operate.getRowError());
             }

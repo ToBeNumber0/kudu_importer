@@ -25,14 +25,19 @@ public class KuduAgentUtils {
      * @return
      * @throws ClassCastException
      */
-    public static Operation WrapperKuduOperation(KuduColumn entity, Operation operate) throws ClassCastException{
+    public static Operation WrapperKuduOperation(KuduColumn entity, Operation operate, List<String> keyList) throws ClassCastException{
 
         String columnName = entity.getColumnName();
         Object columnValue = entity.getColumnValue();
 //        log.info("kudu操作对象包装，列名:{},列值:{}", columnName, columnValue);
         if(!CommonUtil.isObjectNotEmpty(columnValue)){
 //            log.debug("{} 列为空，跳过", columnName);
-            return operate;
+            // 若此列为主键之一  但是为空 需设置值为空串
+            if(keyList.contains(columnName)){
+                columnValue = "";
+            }else {
+                return operate;
+            }
         }
         Type rowType = entity.getColumnType();
         if(null==rowType){
@@ -138,14 +143,29 @@ public class KuduAgentUtils {
      * @return
      * @throws KuduException
      */
-    public static OperationResponse operate(KuduRow entity, Operation operate, KuduSession session) throws KuduException {
+    public static OperationResponse operate(KuduRow entity, Operation operate, KuduSession session, List<String> keyList) throws KuduException {
         for (KuduColumn column : entity.getRows()) {
-            KuduAgentUtils.WrapperKuduOperation(column, operate);
+            KuduAgentUtils.WrapperKuduOperation(column, operate, keyList);
         }
         OperationResponse apply = session.apply(operate);
         return apply;
     }
-
+    /**
+     * 通用方法
+     *
+     * @param entity
+     * @param operate
+     * @param session
+     * @return
+     * @throws KuduException
+     */
+    public static OperationResponse operate(KuduRow entity, Operation operate, KuduSession session) throws KuduException {
+        for (KuduColumn column : entity.getRows()) {
+            KuduAgentUtils.WrapperKuduOperation(column, operate, Lists.newArrayList());
+        }
+        OperationResponse apply = session.apply(operate);
+        return apply;
+    }
     /**
      * 返回column的string list
      *
