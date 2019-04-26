@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# java -jar dh-bigdata-import-1.0-SNAPSHOT.jar --spring.kafka.template.default-topic=pd_product --kudu.table=impala::kudu_database.pd_product_0422
 #startup for mdm application
 ACTIVE_PROFILE=$1
 if [ -z $1 ]; then
